@@ -1,4 +1,4 @@
-# postcoffee-lp-astro
+# note-clone
 
 note クローン（Text Rich Editor）のリポジトリです。
 
