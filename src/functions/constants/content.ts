@@ -13,6 +13,7 @@ export const content = `
     … or two list items.
   </li>
 </ul>
+<img src="https://via.placeholder.com/150" />
 <p>
   Isn’t that great? And all of that is editable. But wait, there’s more. Let’s try a code block:
 </p>

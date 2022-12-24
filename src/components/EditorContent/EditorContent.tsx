@@ -1,10 +1,11 @@
-import { EditorContent as TiptapEditorContent } from "@tiptap/react";
-import styles from "./EditorContent.module.scss";
+import { EditorContent as TiptapEditorContent, Editor } from "@tiptap/react";
+// css modulesで読み込まない
+import "./EditorContent.scss";
 
 export type EditorContentProps = {
-  editor: any;
+  editor: Editor;
 };
 
 export const EditorContent: React.FC<EditorContentProps> = ({ editor }) => {
-  return <TiptapEditorContent editor={editor} className={styles.ProseMirror} />;
+  return <TiptapEditorContent editor={editor} />;
 };

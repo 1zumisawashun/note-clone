@@ -1,9 +1,5 @@
-.ProseMirror {
-  > * + * {
-    margin-top: 0.75em;
-  }
-}
-
-input[type="checkbox"] {
-  margin-right: 8px;
+.bubbleMenuContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
 }

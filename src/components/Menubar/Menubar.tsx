@@ -1,15 +1,12 @@
 import { useCallback } from "react";
 import styles from "./Menubar.module.scss";
+import { Editor } from "@tiptap/react";
 
 export type MenubarProps = {
-  editor: any;
+  editor: Editor;
 };
 
 export const Menubar: React.FC<MenubarProps> = ({ editor }) => {
-  if (!editor) {
-    return null;
-  }
-
   // NOTE:なんとなくだけどbase64ではなくサーバーにポストして帰ってきたurlで表示するような気がする
   const addImage = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,7 +16,11 @@ export const Menubar: React.FC<MenubarProps> = ({ editor }) => {
       reader.readAsDataURL(file);
       await new Promise((resolve) => (reader.onload = () => resolve("")));
       if (reader.result) {
-        editor.chain().focus().setImage({ src: reader.result }).run();
+        editor
+          .chain()
+          .focus()
+          .setImage({ src: reader.result as string })
+          .run();
       }
     },
     [editor]
