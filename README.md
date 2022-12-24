@@ -8,7 +8,7 @@ note クローン（Text Rich Editor）のリポジトリです。
 
 https://tiptap.dev/introduction
 
-![image](https://user-images.githubusercontent.com/65071534/209426611-a828a805-f809-4d09-96b9-bf73c6fb3b22.png)
+![image](https://user-images.githubusercontent.com/65071534/209428175-40199404-32b0-405e-a556-e7597375a579.png)
 
 ## 環境
 
