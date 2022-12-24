@@ -1,3 +1,5 @@
+import { useCallback } from "react";
+
 export type MenuBarProps = {
   editor: any;
 };
@@ -6,6 +8,21 @@ export const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
   if (!editor) {
     return null;
   }
+
+  // NOTE:なんとなくだけどbase64ではなくサーバーにポストして帰ってきたurlで表示するような気がする
+  const addImage = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files === null) return;
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      await new Promise((resolve) => (reader.onload = () => resolve("")));
+      if (reader.result) {
+        editor.chain().focus().setImage({ src: reader.result }).run();
+      }
+    },
+    [editor]
+  );
 
   return (
     <>
@@ -127,6 +144,40 @@ export const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
       >
         redo
       </button>
+      <button
+        onClick={() => editor.chain().focus().setTextAlign("left").run()}
+        className={editor.isActive({ textAlign: "left" }) ? "is-active" : ""}
+      >
+        left
+      </button>
+      <button
+        onClick={() => editor.chain().focus().setTextAlign("center").run()}
+        className={editor.isActive({ textAlign: "center" }) ? "is-active" : ""}
+      >
+        center
+      </button>
+      <button
+        onClick={() => editor.chain().focus().setTextAlign("right").run()}
+        className={editor.isActive({ textAlign: "right" }) ? "is-active" : ""}
+      >
+        right
+      </button>
+      <button
+        onClick={() => editor.chain().focus().setTextAlign("justify").run()}
+        className={editor.isActive({ textAlign: "justify" }) ? "is-active" : ""}
+      >
+        justify
+      </button>
+      <button>
+        <label htmlFor="singleFile">Image</label>
+      </button>
+      <input
+        type="file"
+        onChange={addImage}
+        hidden
+        name="singleFile"
+        id="singleFile"
+      />
     </>
   );
 };
