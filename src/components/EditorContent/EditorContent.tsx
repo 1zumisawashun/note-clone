@@ -1,5 +1,5 @@
 import { EditorContent as TiptapEditorContent } from "@tiptap/react";
-import "./Tiptap.modules.scss";
+import "./EditorContent.module.scss";
 
 export type EditorContentProps = {
   editor: any;

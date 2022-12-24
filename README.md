@@ -8,6 +8,8 @@ note クローン（Text Rich Editor）のリポジトリです。
 
 https://tiptap.dev/introduction
 
+![image](https://user-images.githubusercontent.com/65071534/209426611-a828a805-f809-4d09-96b9-bf73c6fb3b22.png)
+
 ## 環境
 
 - react ^18.2.0

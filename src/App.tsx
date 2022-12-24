@@ -1,6 +1,6 @@
-import "./App.css";
+import styles from "./App.module.scss";
 import { EditorContent } from "./components/EditorContent";
-import { MenuBar } from "./components/Menubar";
+import { Menubar } from "./components/Menubar";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { content } from "./functions/constants/content";
@@ -32,9 +32,9 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <MenuBar editor={editor} />
-      <BubbleMenu editor={editor}></BubbleMenu>
+    <div className={styles.container}>
+      <Menubar editor={editor} />
+      <BubbleMenu editor={editor} />
       <EditorContent editor={editor} />
       <button onClick={handleSubmit}>submit</button>
     </div>

@@ -1,4 +1,4 @@
-import "./BubbleMenu.modules.scss";
+import "./BubbleMenu.module.scss";
 
 import { BubbleMenu as BubbleMenuTiptap } from "@tiptap/react";
 import React, { useEffect } from "react";

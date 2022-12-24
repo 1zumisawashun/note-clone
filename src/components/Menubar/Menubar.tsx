@@ -1,10 +1,11 @@
 import { useCallback } from "react";
+import styles from "./Menubar.module.scss";
 
-export type MenuBarProps = {
+export type MenubarProps = {
   editor: any;
 };
 
-export const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
+export const Menubar: React.FC<MenubarProps> = ({ editor }) => {
   if (!editor) {
     return null;
   }
@@ -25,7 +26,7 @@ export const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
   );
 
   return (
-    <>
+    <div className={styles.menubarContainer}>
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
@@ -178,6 +179,6 @@ export const MenuBar: React.FC<MenuBarProps> = ({ editor }) => {
         name="singleFile"
         id="singleFile"
       />
-    </>
+    </div>
   );
 };
