@@ -1,4 +1,3 @@
-import styles from "./App.module.scss";
 import { EditorContent } from "./components/EditorContent";
 import { Menubar } from "./components/Menubar";
 import { useEditor } from "@tiptap/react";
@@ -21,7 +20,7 @@ function App() {
   };
 
   return (
-    <div className={styles.container}>
+    <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "2rem" }}>
       {editor && (
         <>
           <Menubar editor={editor} />
