@@ -1,21 +1,19 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import "./App.css";
-import { useEditor, EditorContent } from "@tiptap/react";
+import { EditorContent } from "./components/EditorContent";
+import { MenuBar } from "./components/Menubar";
+import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import TipTap from "./components/Tiptap";
+import { content } from "./functions/constants/content";
 
 function App() {
-  const [count, setCount] = useState(0);
   const editor = useEditor({
     extensions: [StarterKit],
-    content: "<p>Hello World!</p>",
+    content: content,
   });
-
   return (
     <div className="App">
-      <TipTap />
-      {/* <EditorContent editor={editor} /> */}
+      <MenuBar editor={editor} />
+      <EditorContent editor={editor} />
     </div>
   );
 }
