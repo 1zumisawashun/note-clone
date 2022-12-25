@@ -1,30 +1,14 @@
 import { useCallback } from "react";
 import styles from "./Menubar.module.scss";
 import { Editor } from "@tiptap/react";
+import { useDD } from "../../functions/hooks/useDD";
 
 export type MenubarProps = {
   editor: Editor;
 };
 
 export const Menubar: React.FC<MenubarProps> = ({ editor }) => {
-  // NOTE:なんとなくだけどbase64ではなくサーバーにポストして帰ってきたurlで表示するような気がする
-  const addImage = useCallback(
-    async (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files === null) return;
-      const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      await new Promise((resolve) => (reader.onload = () => resolve("")));
-      if (reader.result) {
-        editor
-          .chain()
-          .focus()
-          .setImage({ src: reader.result as string })
-          .run();
-      }
-    },
-    [editor]
-  );
+  const { addImage } = useDD(editor);
 
   const setLink = useCallback(() => {
     const previousUrl = editor.getAttributes("link").href;
@@ -32,13 +16,11 @@ export const Menubar: React.FC<MenubarProps> = ({ editor }) => {
 
     // cancelled
     if (url === null) return;
-
     // empty
     if (url === "") {
       editor.chain().focus().extendMarkRange("link").unsetLink().run();
       return;
     }
-
     // update link
     editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
   }, [editor]);
@@ -174,7 +156,7 @@ export const Menubar: React.FC<MenubarProps> = ({ editor }) => {
       </button>
       <input
         type="file"
-        onChange={addImage}
+        onChange={(e) => addImage(e.target.files)}
         hidden
         name="singleFile"
         id="singleFile"

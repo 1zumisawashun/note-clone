@@ -6,7 +6,8 @@ export const useDD = (editor: Editor) => {
   const dragRef = useRef<HTMLDivElement | null>(null);
 
   const addImage = useCallback(
-    async (files: FileList) => {
+    async (files: FileList | null) => {
+      if (files === null) return;
       const file = files[0];
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -47,9 +48,9 @@ export const useDD = (editor: Editor) => {
     e.preventDefault();
     e.stopPropagation();
     if (e.dataTransfer) {
-      const selectedFiles = e.dataTransfer.files;
-      // FIXME:バリデーションを挟みたい
-      addImage(selectedFiles);
+      const files = e.dataTransfer.files;
+      // FIXME:バリデーションを挟む
+      addImage(files);
     }
     setIsDragging(false);
   }, []);
@@ -77,5 +78,5 @@ export const useDD = (editor: Editor) => {
     return () => resetDragEvents();
   }, [initDragEvents, resetDragEvents]);
 
-  return { dragRef };
+  return { dragRef, addImage };
 };
