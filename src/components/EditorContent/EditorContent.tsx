@@ -1,5 +1,5 @@
 import { EditorContent as TiptapEditorContent, Editor } from "@tiptap/react";
-import { useDD } from "../../functions/hooks/useDD";
+import { useDD } from "../../functions/hooks";
 // css modulesで読み込まない
 import "./EditorContent.scss";
 

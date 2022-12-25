@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import styles from "./Menubar.module.scss";
 import { Editor } from "@tiptap/react";
-import { useDD } from "../../functions/hooks/useDD";
+import { useDD } from "../../functions/hooks";
 
 export type MenubarProps = {
   editor: Editor;

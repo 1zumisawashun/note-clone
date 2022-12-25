@@ -78,5 +78,5 @@ export const useDD = (editor: Editor) => {
     return () => resetDragEvents();
   }, [initDragEvents, resetDragEvents]);
 
-  return { dragRef, addImage };
+  return { dragRef, addImage, isDragging };
 };
