@@ -4,19 +4,24 @@ import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { content } from "./functions/constants/content";
 import { BubbleMenu } from "./components/BubbleMenu";
-import { Image, TextAlign } from "./functions/utilities";
+import { Image, TextAlign, Link } from "./functions/utilities";
 
 function App() {
   const editor = useEditor({
-    extensions: [StarterKit, TextAlign, Image],
+    extensions: [StarterKit, TextAlign, Image, Link],
     content: content,
+    // editorProps: {
+    //   attributes: {
+    //     class: styles.editorContent,
+    //   },
+    // },
   });
 
   // NOTE:https://tiptap.dev/guide/output
   const handleSubmit = () => {
     if (!editor) return;
     const html = editor.getHTML();
-    console.log(html, "html");
+    alert(html);
   };
 
   return (

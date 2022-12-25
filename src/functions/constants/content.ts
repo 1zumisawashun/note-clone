@@ -13,6 +13,9 @@ export const content = `
     … or two list items.
   </li>
 </ul>
+<p>
+The Link extension adds support for <a href="https://tiptap.dev/api/marks/link"> tags to the editor </a>. The extension is headless too, there is no actual UI to add, modify or delete links. The usage example below uses the native JavaScript prompt to show you how that could work.
+</p>
 <img src="https://via.placeholder.com/150" />
 <p>
   Isn’t that great? And all of that is editable. But wait, there’s more. Let’s try a code block:

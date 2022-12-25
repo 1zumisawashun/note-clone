@@ -26,6 +26,23 @@ export const Menubar: React.FC<MenubarProps> = ({ editor }) => {
     [editor]
   );
 
+  const setLink = useCallback(() => {
+    const previousUrl = editor.getAttributes("link").href;
+    const url = window.prompt("URL", previousUrl);
+
+    // cancelled
+    if (url === null) return;
+
+    // empty
+    if (url === "") {
+      editor.chain().focus().extendMarkRange("link").unsetLink().run();
+      return;
+    }
+
+    // update link
+    editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
+  }, [editor]);
+
   return (
     <div className={styles.menubarContainer}>
       <button
@@ -85,24 +102,6 @@ export const Menubar: React.FC<MenubarProps> = ({ editor }) => {
         className={editor.isActive("heading", { level: 3 }) ? "is-active" : ""}
       >
         h3
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-        className={editor.isActive("heading", { level: 4 }) ? "is-active" : ""}
-      >
-        h4
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-        className={editor.isActive("heading", { level: 5 }) ? "is-active" : ""}
-      >
-        h5
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-        className={editor.isActive("heading", { level: 6 }) ? "is-active" : ""}
-      >
-        h6
       </button>
       <button
         onClick={() => editor.chain().focus().toggleBulletList().run()}
@@ -180,6 +179,18 @@ export const Menubar: React.FC<MenubarProps> = ({ editor }) => {
         name="singleFile"
         id="singleFile"
       />
+      <button
+        onClick={setLink}
+        className={editor.isActive("link") ? "is-active" : ""}
+      >
+        setLink
+      </button>
+      <button
+        onClick={() => editor.chain().focus().unsetLink().run()}
+        disabled={!editor.isActive("link")}
+      >
+        unsetLink
+      </button>
     </div>
   );
 };

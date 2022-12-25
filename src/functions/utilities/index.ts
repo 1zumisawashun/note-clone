@@ -1,1 +1,1 @@
-export { Image, TextAlign } from "./TiptapExtensionClient";
+export { Image, TextAlign, Link } from "./TiptapExtensionClient";

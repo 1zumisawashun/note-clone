@@ -1,6 +1,7 @@
 import { Image as TiptapImage } from "@tiptap/extension-image";
 import TiptapTextAlign from "@tiptap/extension-text-align";
 import { mergeAttributes } from "@tiptap/react";
+import TiptapLink from "@tiptap/extension-link";
 
 // NOTE:https://tiptap.dev/api/nodes/image
 // NOTE:https://codesandbox.io/s/tiptap-image-forked-bvchsz?file=/src/Editor.jsx:409-416
@@ -30,4 +31,11 @@ export const TextAlign = TiptapTextAlign.extend({
       defaultAlignment: "left",
     };
   },
+});
+
+// NOTE:https://tiptap.dev/api/marks/link
+export const Link = TiptapLink.configure({
+  HTMLAttributes: { target: "_blank" },
+  linkOnPaste: false,
+  openOnClick: true,
 });

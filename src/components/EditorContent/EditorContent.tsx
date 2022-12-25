@@ -1,4 +1,5 @@
 import { EditorContent as TiptapEditorContent, Editor } from "@tiptap/react";
+import { useDD } from "../../functions/hooks/useDD";
 // css modulesで読み込まない
 import "./EditorContent.scss";
 
@@ -7,5 +8,11 @@ export type EditorContentProps = {
 };
 
 export const EditorContent: React.FC<EditorContentProps> = ({ editor }) => {
-  return <TiptapEditorContent editor={editor} />;
+  const { dragRef } = useDD(editor);
+
+  return (
+    <div ref={dragRef}>
+      <TiptapEditorContent editor={editor} />
+    </div>
+  );
 };
