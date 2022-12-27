@@ -4,17 +4,12 @@ import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { content } from "./functions/constants/content";
 import { BubbleMenu } from "./components/BubbleMenu";
-import { Image, TextAlign, Link } from "./functions/utilities";
+import { Image, TextAlign, Link, HardBreak } from "./functions/utilities";
 
 function App() {
   const editor = useEditor({
-    extensions: [StarterKit, TextAlign, Image, Link],
+    extensions: [StarterKit, TextAlign, Image, Link, HardBreak],
     content: content,
-    // editorProps: {
-    //   attributes: {
-    //     class: styles.editorContent,
-    //   },
-    // },
   });
 
   // NOTE:https://tiptap.dev/guide/output
