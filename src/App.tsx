@@ -4,11 +4,17 @@ import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { content } from "./functions/constants/content";
 import { BubbleMenu } from "./components/BubbleMenu";
-import { Image, TextAlign, Link, HardBreak } from "./functions/utilities";
+import {
+  Image,
+  TextAlign,
+  Link,
+  HardBreak,
+  Focus,
+} from "./functions/utilities";
 
 function App() {
   const editor = useEditor({
-    extensions: [StarterKit, TextAlign, Image, Link, HardBreak],
+    extensions: [StarterKit, TextAlign, Image, Link, HardBreak, Focus],
     content: content,
   });
 
@@ -20,7 +26,7 @@ function App() {
   };
 
   return (
-    <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "2rem" }}>
+    <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "4rem" }}>
       {editor && (
         <>
           <Menubar editor={editor} />

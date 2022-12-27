@@ -1,1 +1,7 @@
-export { Image, TextAlign, Link, HardBreak } from "./TiptapExtensionClient";
+export {
+  Image,
+  TextAlign,
+  Link,
+  HardBreak,
+  Focus,
+} from "./TiptapExtensionClient";

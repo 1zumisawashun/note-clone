@@ -3,6 +3,7 @@ import TiptapTextAlign from "@tiptap/extension-text-align";
 import { mergeAttributes } from "@tiptap/react";
 import TiptapLink from "@tiptap/extension-link";
 import TiptapHardBreak from "@tiptap/extension-hard-break";
+import TiptapFocus from "@tiptap/extension-focus";
 
 // NOTE:https://tiptap.dev/api/nodes/image
 // NOTE:https://codesandbox.io/s/tiptap-image-forked-bvchsz?file=/src/Editor.jsx:409-416
@@ -39,6 +40,11 @@ export const Link = TiptapLink.configure({
   HTMLAttributes: { target: "_blank" },
   linkOnPaste: false,
   openOnClick: true,
+});
+
+export const Focus = TiptapFocus.configure({
+  className: "focus",
+  mode: "shallowest",
 });
 
 export const HardBreak = TiptapHardBreak.extend({
