@@ -2,7 +2,6 @@ import TiptapImage from "@tiptap/extension-image";
 import TiptapTextAlign from "@tiptap/extension-text-align";
 import { mergeAttributes } from "@tiptap/react";
 import TiptapLink from "@tiptap/extension-link";
-import TiptapHardBreak from "@tiptap/extension-hard-break";
 import TiptapFocus from "@tiptap/extension-focus";
 import TiptapParagraph from "@tiptap/extension-paragraph";
 
