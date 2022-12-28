@@ -2,6 +2,9 @@ export {
   Image,
   TextAlign,
   Link,
-  HardBreak,
+  // HardBreak,
   Focus,
+  Paragraph,
 } from "./TiptapExtensionClient";
+
+export { ExtensionComponent } from "./NodeExtensionClient";

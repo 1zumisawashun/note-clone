@@ -8,13 +8,24 @@ import {
   Image,
   TextAlign,
   Link,
-  HardBreak,
+  // HardBreak,
   Focus,
+  ExtensionComponent,
+  Paragraph,
 } from "./functions/utilities";
 
 function App() {
   const editor = useEditor({
-    extensions: [StarterKit, TextAlign, Image, Link, HardBreak, Focus],
+    extensions: [
+      StarterKit,
+      TextAlign,
+      Image,
+      Link,
+      // HardBreak,
+      Focus,
+      ExtensionComponent,
+      Paragraph,
+    ],
     content: content,
   });
 
