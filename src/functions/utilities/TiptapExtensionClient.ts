@@ -1,10 +1,9 @@
-import { Image as TiptapImage } from "@tiptap/extension-image";
+import TiptapImage from "@tiptap/extension-image";
 import TiptapTextAlign from "@tiptap/extension-text-align";
 import { mergeAttributes } from "@tiptap/react";
 import TiptapLink from "@tiptap/extension-link";
 import TiptapHardBreak from "@tiptap/extension-hard-break";
 import TiptapFocus from "@tiptap/extension-focus";
-import { Extension } from "@tiptap/core";
 import TiptapParagraph from "@tiptap/extension-paragraph";
 
 // NOTE:https://tiptap.dev/api/nodes/image
@@ -15,6 +14,7 @@ export const Image = TiptapImage.extend({
     sizes: ["inline", "block", "left", "right"],
     allowBase64: true,
   },
+  // NOTE:components/Component.tsx見るといいかも
   renderHTML({ HTMLAttributes }) {
     const { style } = HTMLAttributes;
     return [
@@ -49,34 +49,39 @@ export const Focus = TiptapFocus.configure({
   mode: "shallowest",
 });
 
-export const Paragraph = TiptapImage.extend({
+/**
+ * 以下を参考に実装した
+ * https://github.com/ueberdosis/tiptap/blob/main/packages/extension-code-block/src/code-block.ts#L146
+ */
+
+/**
+ * how do get the current node on click? > selection.$head.parent
+ * https://github.com/ueberdosis/tiptap/discussions/2826
+ */
+
+/**
+ * extendsがTiptapImageでもaddKeyboardShortcuts > Enterは問題なく動いていたので
+ * より適した呼び出し方法があるはず、今はTiptapParagraphとして呼び出している
+ */
+export const Paragraph = TiptapParagraph.extend({
   addKeyboardShortcuts() {
     return {
-      // exit node on triple enter
       Enter: ({ editor }) => {
-        const { state } = editor;
-        const { selection } = state;
-        const { $from, empty } = selection;
+        const selection = editor.state.selection;
+        const { $from } = selection;
+        const typeName = $from.nodeBefore?.type.name;
 
-        // FIXME:これをフォーカス当たっているHTMLだけ取得したい
-        const result = editor.getHTML();
-        console.log(result);
-
-        // const endsWithDoubleNewline = $from.parent.textContent.match("\n\n");
-        console.log($from.nodeBefore);
-        const endsWithDoubleNewline = result.match("<br><br>");
-
-        if (!endsWithDoubleNewline) {
-          // editor.commands.insertContent("\n");
+        if (typeName !== "hardBreak") {
           editor.commands.insertContent("<br>");
-          return true; // trueで一旦コマンドが切れる
+          // NOTE:falseにしてしまうとなんか期待値にならない
+          return true;
         }
 
+        // NOTE:<br>はpos1なので<br>を消すためにpositionをマイナス1にする
         return editor
           .chain()
           .command(({ tr }) => {
-            console.log("ここまでは生きている？");
-            tr.delete($from.pos - 2, $from.pos);
+            tr.delete($from.pos - 1, $from.pos);
             return true;
           })
           .createParagraphNear()
@@ -85,44 +90,3 @@ export const Paragraph = TiptapImage.extend({
     };
   },
 });
-
-// export const HardBreak = TiptapHardBreak.extend({
-//   addKeyboardShortcuts() {
-//     return {
-//       Enter: ({ editor }) => {
-//         const selection = editor.view.state.selection;
-//         const isBeginning = !Boolean(selection.$from.textOffset);
-//         const isHardBreak = Boolean(selection.$head.nodeBefore);
-//         const isOrderedList = this.editor.isActive("orderedList");
-//         const isBulletList = this.editor.isActive("bulletList");
-//         const nodeType = selection.$head.nodeBefore?.type;
-//         // console.log(nodes)
-//         // editor.commands.splitBlock();
-//         // return this.editor.chain().createParagraphNear().run();
-//         if (isOrderedList || isBulletList) {
-//           return this.editor.chain().createParagraphNear().run();
-//           // return editor.commands.splitBlock();
-//         }
-
-//         if (isBeginning && isHardBreak) {
-//           if (nodeType) {
-//             editor.chain().focus().deleteNode(nodeType).run();
-//             // editor.chain().focus().deleteNode("reactComponent").run();
-//             // editor.commands.deleteNode("hardBreak");
-//             console.log("ここ動いている！");
-//           }
-//           // return this.editor.chain().createParagraphNear().run();
-//           return editor.commands.splitBlock();
-//           // return this.editor.chain().createParagraphNear().run();
-//         }
-
-//         if (isBeginning && !isHardBreak) {
-//           return this.editor.chain().createParagraphNear().run();
-//           return editor.commands.splitBlock();
-//         }
-
-//         return this.editor.commands.setHardBreak();
-//       },
-//     };
-//   },
-// });
