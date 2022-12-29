@@ -46,6 +46,7 @@ export const Link = TiptapLink.configure({
   openOnClick: true,
 });
 
+// renderHTMLでmenuButtonだせない？
 export const Focus = TiptapFocus.configure({
   className: "focus",
   mode: "shallowest",

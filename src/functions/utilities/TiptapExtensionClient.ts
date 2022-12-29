@@ -32,7 +32,8 @@ const handleExitOnDoubleEnter = (editor: Editor) => {
   const { $from } = selection;
   const typeName = $from.nodeBefore?.type.name;
 
-  // NOTE:codeの時にbrを入れないハンドリングを追加する
+  // FIXME:codeの時にbrを入れないハンドリングを追加する
+  // FIXME:先頭でenterを押した場合は改行（p）させる
   if (typeName !== "hardBreak") {
     editor.commands.insertContent("<br>");
     // NOTE:falseにしてしまうとなんか期待値にならない

@@ -5,6 +5,7 @@ import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { content } from "./functions/constants/content";
 import { BubbleMenu } from "./components/BubbleMenu";
+import { MenuButton } from "./components/MenuButton";
 import {
   Image,
   TextAlign,
@@ -32,6 +33,10 @@ function App() {
       CustomNewline,
     ],
     content: content,
+
+    // onTransaction: ({ state }) => {
+    //   console.log(state.selection.anchor)
+    // },
   });
 
   // NOTE:https://tiptap.dev/guide/output
@@ -42,17 +47,20 @@ function App() {
   };
 
   return (
-    <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "4rem" }}>
+    <div style={{ position: "relative" }}>
       {editor && (
         <>
-          <Menubar editor={editor} />
-          <MenubarSub editor={editor} />
-          <BubbleMenu editor={editor} />
-          <p>count is {editor.storage.characterCount.characters()}</p>
-          <EditorContent editor={editor} />
+          <div style={{ maxWidth: "1280px", padding: "4rem" }} id="test">
+            <Menubar editor={editor} />
+            <MenubarSub editor={editor} />
+            <BubbleMenu editor={editor} />
+            <p>count is {editor.storage.characterCount.characters()}</p>
+            <EditorContent editor={editor} />
+            <button onClick={handleSubmit}>submit</button>
+          </div>
+          <MenuButton />
         </>
       )}
-      <button onClick={handleSubmit}>submit</button>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 export const content = `
-<h2>
+<h2 id="unique">
   Hi there,
 </h2>
 <react-component>
