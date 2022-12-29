@@ -47,6 +47,10 @@ button {
   background-color: $eerie-black;
   cursor: pointer;
   transition: border-color 0.25s;
+  // 中央寄せ
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 button:hover {
   border-color: $blue-genie;

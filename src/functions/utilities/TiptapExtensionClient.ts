@@ -1,5 +1,8 @@
 import { Extension, Editor } from "@tiptap/core";
 
+/**
+ * https://stackoverflow.com/questions/73842787/how-to-add-custom-command-in-in-declaration-in-tiptap-when-extending-existing-ex
+ */
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
     newline: {
@@ -33,6 +36,7 @@ const handleExitOnDoubleEnter = (editor: Editor) => {
   if (typeName !== "hardBreak") {
     editor.commands.insertContent("<br>");
     // NOTE:falseにしてしまうとなんか期待値にならない
+    // NOTE:trueで処理をスルーするっぽい > https://github.com/ueberdosis/tiptap/discussions/2948
     return true;
   }
 
@@ -51,6 +55,7 @@ const handleExitOnDoubleEnter = (editor: Editor) => {
 };
 
 // NOTE:https://stackoverflow.com/questions/65668815/tiptap-how-to-create-a-paragraph-p-on-shift-enter-instead-of-a-br
+// NOTE:コマンドの拡張で上記記事の内容を引用。別途型定義を拡張させる必要がある。
 export const CustomNewline = Extension.create({
   name: "newline",
   priority: 1000, // Optional
@@ -73,9 +78,14 @@ export const CustomNewline = Extension.create({
   },
   addKeyboardShortcuts() {
     return {
-      "Shift-Enter": () => this.editor.commands.addNewline(),
+      // "Shift-Enter": () => this.editor.commands.addNewline(),
       // Enter: () => this.editor.commands.exitOnDoubleEnter(),
       Enter: ({ editor }) => handleExitOnDoubleEnter(editor),
+      // NOTE:https://stackoverflow.com/questions/65668815/tiptap-how-to-create-a-paragraph-p-on-shift-enter-instead-of-a-br
+      "Shift-Enter": ({ editor }) => {
+        editor.commands.enter();
+        return true;
+      },
     };
   },
 });

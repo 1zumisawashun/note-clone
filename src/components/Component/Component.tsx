@@ -1,5 +1,4 @@
 import { NodeViewContent, NodeViewWrapper, NodeViewProps } from "@tiptap/react";
-import React from "react";
 
 // NOTE:https://github.com/ueberdosis/tiptap/discussions/1317
 export const Component = (props: NodeViewProps) => {
