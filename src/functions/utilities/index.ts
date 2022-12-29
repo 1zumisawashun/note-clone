@@ -4,6 +4,10 @@ export {
   Link,
   Focus,
   Paragraph,
-} from "./TiptapExtensionClient";
+  Placeholder,
+  CharacterCount,
+} from "./TiptapClient";
+
+export { CustomNewline } from "./TiptapExtensionClient";
 
 export { ExtensionComponent } from "./TiptapNodeClient";

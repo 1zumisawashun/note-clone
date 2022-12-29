@@ -8,14 +8,13 @@ note クローン（Text Rich Editor）のリポジトリです。
 
 https://tiptap.dev/introduction
 
-![image](https://user-images.githubusercontent.com/65071534/209428175-40199404-32b0-405e-a556-e7597375a579.png)
+![image](https://user-images.githubusercontent.com/65071534/209815422-6ef3342b-b627-456a-862f-2061362a9dcc.png)
 
 ## 環境
 
 - react ^18.2.0
 - sass ^1.57.1
 - @tiptap/react ^2.0.0-beta.209
-- @tiptap/starter-kit ^2.0.0-beta.209
 
 ## Installation
 
@@ -45,7 +44,7 @@ npm i sass sass-loader
 $ npm run dev
 ```
 
-http://localhost:3000/
+http://127.0.0.1:5173/
 
 - 上記の手順で失敗する場合 [Troubleshoot](#Troubleshoot)を確認してください
 

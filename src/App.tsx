@@ -11,6 +11,9 @@ import {
   Focus,
   ExtensionComponent,
   Paragraph,
+  Placeholder,
+  CharacterCount,
+  CustomNewline,
 } from "./functions/utilities";
 
 function App() {
@@ -23,6 +26,9 @@ function App() {
       Focus,
       ExtensionComponent,
       Paragraph,
+      Placeholder,
+      CharacterCount,
+      CustomNewline,
     ],
     content: content,
   });
@@ -40,6 +46,7 @@ function App() {
         <>
           <Menubar editor={editor} />
           <BubbleMenu editor={editor} />
+          <p>count is {editor.storage.characterCount.characters()}</p>
           <EditorContent editor={editor} />
         </>
       )}
