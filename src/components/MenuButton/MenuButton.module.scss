@@ -1,6 +1,10 @@
-.menuButton {
-  display: flex;
+.tooltip {
   position: absolute;
-  z-index: 1;
-  transform: translateY(-8px);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  :hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
 }

@@ -3,9 +3,8 @@ import { Menubar } from "./components/Menubar";
 import { MenubarSub } from "./components/MenubarSub";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { content } from "./functions/constants/content";
+import { content } from "./functions/constants/content_01";
 import { BubbleMenu } from "./components/BubbleMenu";
-import { MenuButton } from "./components/MenuButton";
 import {
   Image,
   TextAlign,
@@ -16,6 +15,7 @@ import {
   Placeholder,
   CharacterCount,
   CustomNewline,
+  EventHandler,
 } from "./functions/utilities";
 
 function App() {
@@ -31,6 +31,7 @@ function App() {
       Placeholder,
       CharacterCount,
       CustomNewline,
+      EventHandler,
     ],
     content: content,
 
@@ -58,7 +59,6 @@ function App() {
             <EditorContent editor={editor} />
             <button onClick={handleSubmit}>submit</button>
           </div>
-          <MenuButton />
         </>
       )}
     </div>

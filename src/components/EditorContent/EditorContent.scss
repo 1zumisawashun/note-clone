@@ -6,24 +6,48 @@
   border-radius: 10px;
   border: 1px solid $black-wash;
 
+  * {
+    box-sizing: border-box;
+    margin: 0;
+  }
+
   .focus {
     border-left: 3px solid $black-wash;
-    padding-left: 5px;
   }
 
   ul,
   ol {
     display: block;
-    padding: 0 1rem;
+    border-left: 3px solid transparent;
+    p {
+      border-left: none;
+      padding: 0;
+    }
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    line-height: 1.1;
+  h1 {
+    line-height: 70px;
+    border-left: 3px solid transparent;
+    margin: 20px 0;
+    padding: 0 20px;
+  }
+  h2 {
+    line-height: 60px;
+    border-left: 3px solid transparent;
+    margin: 20px 0;
+    padding: 0 20px;
+  }
+  h3 {
+    line-height: 50px;
+    border-left: 3px solid transparent;
+    margin: 20px 0;
+    padding: 0 20px;
+  }
+  p {
+    margin: 20px 0;
+    padding: 0 20px;
+    line-height: 40px;
+    border-left: 3px solid transparent;
   }
 
   code {
@@ -53,7 +77,10 @@
 
   blockquote {
     padding-left: 1rem;
-    border-left: 2px solid rgba($black-wash, 0.1);
+    border-left: 3px solid rgba($black-wash, 0.1);
+    p {
+      border-left: none;
+    }
   }
 
   hr {

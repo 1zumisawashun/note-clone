@@ -1,4 +1,12 @@
-import { Extension, Editor } from "@tiptap/core";
+import {
+  Extension,
+  Editor,
+  isNodeSelection,
+  isTextSelection,
+  posToDOMRect,
+} from "@tiptap/core";
+import { Plugin, PluginKey, EditorState } from "prosemirror-state";
+import { EditorView } from "prosemirror-view";
 
 /**
  * https://stackoverflow.com/questions/73842787/how-to-add-custom-command-in-in-declaration-in-tiptap-when-extending-existing-ex
@@ -88,5 +96,94 @@ export const CustomNewline = Extension.create({
         return true;
       },
     };
+  },
+});
+
+class SelectionSizeTooltip {
+  tooltip;
+
+  constructor(view: EditorView) {
+    this.tooltip = document.getElementById("tooltip");
+    if (!this.tooltip) return;
+
+    if (view.dom.parentNode) {
+      view.dom.parentNode.appendChild(this.tooltip);
+    }
+
+    this.update(view, null);
+  }
+
+  update(view: EditorView, lastState: EditorState | null) {
+    const from = view.state.selection.from;
+    let start = view.coordsAtPos(from);
+
+    if (!lastState) return;
+    if (!this.tooltip) return;
+
+    this.tooltip.style.display = "";
+
+    if (!this.tooltip.offsetParent) {
+      this.tooltip.style.display = "none";
+      return;
+    }
+
+    let box = this.tooltip.offsetParent.getBoundingClientRect();
+
+    this.tooltip.style.left = -50 + "px";
+
+    const parent = view.state.selection.$head.parent;
+
+    if (parent.type.name === "heading") {
+      if (parent.attrs.level === 1) {
+        const result = (70 - 40) / 2 + 40;
+        this.tooltip.style.bottom = box.bottom - start.top - result + "px";
+      }
+      if (parent.attrs.level === 2) {
+        const result = (60 - 40) / 2 + 40;
+        this.tooltip.style.bottom = box.bottom - start.top + 13 - result + "px";
+      }
+      if (parent.attrs.level === 3) {
+        const result = (50 - 40) / 2 + 40;
+        this.tooltip.style.bottom = box.bottom - start.top + 12 - result + "px";
+      }
+    }
+    if (parent.type.name === "paragraph") {
+      const result = (40 - 40) / 2 + 40;
+      this.tooltip.style.bottom = box.bottom - start.top + 8 - result + "px";
+    }
+  }
+
+  destroy() {
+    if (!this.tooltip) return;
+    this.tooltip.remove();
+  }
+}
+
+// state.selection.emptyはスクロール選択のこと
+export const EventHandler = Extension.create({
+  name: "eventHandler",
+
+  addProseMirrorPlugins() {
+    return [
+      new Plugin({
+        key: new PluginKey("eventHandler"),
+        view(editorView) {
+          return new SelectionSizeTooltip(editorView);
+        },
+        props: {
+          // focus（click）, inputText, enterで関数をセットする必要がある
+          // ここのviewはこれが使える。https://prosemirror.net/docs/ref/#view
+          handleTextInput(view, from, to, next) {
+            let start = view.coordsAtPos(from);
+            // console.log(start, "handleTextInput");
+          },
+          handleClick(view) {
+            const from = view.state.selection.from;
+            let start = view.coordsAtPos(from);
+            // console.log(start, "handleClick");
+          },
+        },
+      }),
+    ];
   },
 });

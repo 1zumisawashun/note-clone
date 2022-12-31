@@ -8,6 +8,6 @@ export {
   CharacterCount,
 } from "./TiptapClient";
 
-export { CustomNewline } from "./TiptapExtensionClient";
+export { CustomNewline, EventHandler } from "./TiptapExtensionClient";
 
 export { ExtensionComponent } from "./TiptapNodeClient";
