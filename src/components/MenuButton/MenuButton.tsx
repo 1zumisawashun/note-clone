@@ -11,10 +11,10 @@ export const MenuButton: React.FC<MenuButtonProps> = ({ onClick }) => {
     console.log("click");
   };
   return (
-    <div id="tooltip" className={styles.tooltip}>
+    <div id="tooltip" className={styles.tooltip} draggable>
       <RxPlusCircled
         onClick={handleClick}
-        style={{ fontSize: "40px" }}
+        className={styles.plusicon}
       ></RxPlusCircled>
     </div>
   );

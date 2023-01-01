@@ -29,6 +29,10 @@ export const Menubar: React.FC<MenubarProps> = ({ editor }) => {
   const { addImage } = useDD(editor);
   const { setLink } = useLink(editor);
 
+  const handleTrash = () => {
+    editor.chain().focus().deleteNode("paragraph").run();
+  };
+
   return (
     <div className={styles.menubarContainer}>
       <button
@@ -52,11 +56,7 @@ export const Menubar: React.FC<MenubarProps> = ({ editor }) => {
       >
         <AiOutlineStrikethrough></AiOutlineStrikethrough>
       </button>
-      <button
-        onClick={() =>
-          editor.chain().focus().deleteNode("reactComponent").run()
-        }
-      >
+      <button onClick={handleTrash}>
         <RxTrash></RxTrash>
       </button>
       <button
