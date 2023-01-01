@@ -32,6 +32,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "bold",
       onClick: () => editor.chain().focus().toggleBold().run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: !editor.can().chain().focus().toggleBold().run(),
       className: editor.isActive("bold") ? "is-active" : "",
       children: <AiOutlineBold></AiOutlineBold>,
@@ -42,6 +44,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "italic",
       onClick: () => editor.chain().focus().toggleItalic().run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: !editor.can().chain().focus().toggleItalic().run(),
       className: editor.isActive("italic") ? "is-active" : "",
       children: <AiOutlineItalic></AiOutlineItalic>,
@@ -52,6 +56,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "strike",
       onClick: () => editor.chain().focus().toggleStrike().run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: !editor.can().chain().focus().toggleStrike().run(),
       className: editor.isActive("strike") ? "is-active" : "",
       children: <AiOutlineStrikethrough></AiOutlineStrikethrough>,
@@ -62,6 +68,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "trash",
       onClick: () => editor.chain().focus().deleteNode("paragraph").run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: false,
       className: "",
       children: <RxTrash></RxTrash>,
@@ -72,6 +80,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "heading",
       onClick: () => editor.chain().focus().toggleHeading({ level: 1 }).run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: false,
       className: editor.isActive("heading", { level: 1 }) ? "is-active" : "",
       children: "h1",
@@ -82,6 +92,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "heading",
       onClick: () => editor.chain().focus().toggleHeading({ level: 2 }).run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: false,
       className: editor.isActive("heading", { level: 2 }) ? "is-active" : "",
       children: "h2",
@@ -92,6 +104,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "heading",
       onClick: () => editor.chain().focus().toggleHeading({ level: 3 }).run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: false,
       className: editor.isActive("heading", { level: 3 }) ? "is-active" : "",
       children: "h3",
@@ -102,6 +116,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "bulletList",
       onClick: () => editor.chain().focus().toggleBulletList().run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: false,
       className: editor.isActive("bulletList") ? "is-active" : "",
       children: <AiOutlineUnorderedList></AiOutlineUnorderedList>,
@@ -112,6 +128,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "orderedList",
       onClick: () => editor.chain().focus().toggleOrderedList().run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: false,
       className: editor.isActive("orderedList") ? "is-active" : "",
       children: <AiOutlineOrderedList></AiOutlineOrderedList>,
@@ -122,6 +140,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "blockquote",
       onClick: () => editor.chain().focus().toggleBlockquote().run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: false,
       className: editor.isActive("blockquote") ? "is-active" : "",
       children: <RxQuote></RxQuote>,
@@ -132,6 +152,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "horizontal",
       onClick: () => editor.chain().focus().setHorizontalRule().run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: false,
       className: "",
       children: <RxDividerHorizontal></RxDividerHorizontal>,
@@ -142,6 +164,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "textAlign",
       onClick: () => editor.chain().focus().setTextAlign("left").run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: false,
       className: editor.isActive({ textAlign: "left" }) ? "is-active" : "",
       children: <AiOutlineAlignLeft></AiOutlineAlignLeft>,
@@ -152,6 +176,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "textAlign",
       onClick: () => editor.chain().focus().setTextAlign("center").run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: false,
       className: editor.isActive({ textAlign: "center" }) ? "is-active" : "",
       children: <AiOutlineAlignCenter></AiOutlineAlignCenter>,
@@ -162,6 +188,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "textAlign",
       onClick: () => editor.chain().focus().setTextAlign("right").run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: false,
       className: editor.isActive({ textAlign: "right" }) ? "is-active" : "",
       children: <AiOutlineAlignRight></AiOutlineAlignRight>,
@@ -172,6 +200,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "upload",
       onClick: () => null,
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: false,
       className: "",
       children: (
@@ -186,6 +216,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "link",
       onClick: () => setLink(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: false,
       className: editor.isActive("link") ? "is-active" : "",
       children: <RxLink1></RxLink1>,
@@ -196,6 +228,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "link",
       onClick: () => editor.chain().focus().unsetLink().run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: !editor.isActive("link"),
       className: "",
       children: <RxLinkBreak1></RxLinkBreak1>,
@@ -206,6 +240,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "code",
       onClick: () => editor.chain().focus().toggleCode().run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: !editor.can().chain().focus().toggleCode().run(),
       className: editor.isActive("code") ? "is-active" : "",
       children: <RxCode></RxCode>,
@@ -215,6 +251,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "clear",
       onClick: () => editor.chain().focus().unsetAllMarks().run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: false,
       className: "",
       children: "clear marks",
@@ -224,6 +262,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "clear",
       onClick: () => editor.chain().focus().clearNodes().run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: false,
       className: "",
       children: "clear nodes",
@@ -233,6 +273,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "paragraph",
       onClick: () => editor.chain().focus().setParagraph().run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: false,
       className: editor.isActive("paragraph") ? "is-active" : "",
       children: "p",
@@ -242,6 +284,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "codeBlock",
       onClick: () => editor.chain().focus().toggleCodeBlock().run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: false,
       className: editor.isActive("codeBlock") ? "is-active" : "",
       children: "code block",
@@ -251,6 +295,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "hardBreak",
       onClick: () => editor.chain().focus().setHardBreak().run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: false,
       className: "",
       children: "br",
@@ -260,6 +306,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "undo",
       onClick: () => editor.chain().focus().undo().run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: !editor.can().chain().focus().undo().run(),
       className: "",
       children: <AiOutlineUndo></AiOutlineUndo>,
@@ -269,6 +317,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "redo",
       onClick: () => editor.chain().focus().redo().run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: !editor.can().chain().focus().redo().run(),
       className: "",
       children: <AiOutlineRedo></AiOutlineRedo>,
@@ -278,6 +328,8 @@ export const useMenu = (editor: Editor) => {
     return {
       type: "textAlign",
       onClick: () => editor.chain().focus().setTextAlign("justify").run(),
+      onMouseOver: () => null,
+      onMouseLeave: () => null,
       disabled: false,
       className: editor.isActive({ textAlign: "justify" }) ? "is-active" : "",
       children: <RxTextAlignJustify></RxTextAlignJustify>,

@@ -2,24 +2,23 @@ import { RxPlusCircled } from "react-icons/rx";
 import { useState, SyntheticEvent } from "react";
 import { Menu, MenuItem, Tooltip } from "@mui/material";
 import { Editor } from "@tiptap/react";
-import { useDD, useDisclosure, useMenu } from "../functions/hooks";
+import { useDD, useMenu } from "../functions/hooks";
 
 export type MenuButtonProps = {
   editor: Editor;
 };
 
 export const MenuButton: React.FC<MenuButtonProps> = ({ editor }) => {
-  const { open, close, isOpen } = useDisclosure();
   const [anchorEl, setAnchorEl] = useState<Element | null>(null);
 
   const handleOpen = (e: SyntheticEvent) => {
     setAnchorEl(e.currentTarget);
-    open();
   };
   const handleClose = (e: SyntheticEvent) => {
     setAnchorEl(null);
-    close();
   };
+
+  const isOpen = Boolean(anchorEl);
 
   const { addImage } = useDD(editor);
   const {
@@ -46,11 +45,16 @@ export const MenuButton: React.FC<MenuButtonProps> = ({ editor }) => {
 
   return (
     <div id="tooltip" style={{ display: "none" }}>
-      <RxPlusCircled onClick={handleOpen} className="plusicon"></RxPlusCircled>
+      <RxPlusCircled
+        // onMouseOver={handleOpen}
+        onClick={handleOpen}
+        className="plusicon"
+      ></RxPlusCircled>
       <Menu
         anchorEl={anchorEl}
         open={isOpen}
         onClose={handleClose}
+        // MenuListProps={{ onMouseLeave: handleClose }}
         anchorOrigin={{
           vertical: 0,
           horizontal: 60,
