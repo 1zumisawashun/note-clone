@@ -15,28 +15,6 @@
   -webkit-text-size-adjust: 100%;
 }
 
-a {
-  font-weight: 500;
-  color: $blue-genie;
-  text-decoration: inherit;
-}
-a:hover {
-  color: $aquarius-mood-indigo;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
 button {
   border-radius: 8px;
   border: 1px solid $eerie-black;
@@ -71,4 +49,20 @@ button:focus-visible {
   button {
     background-color: $doctor;
   }
+}
+
+.tooltip {
+  position: absolute;
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  :hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+}
+.plusicon {
+  font-size: 40px;
+  color: rgba($black-wash, 0.5);
 }

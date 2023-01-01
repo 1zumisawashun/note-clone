@@ -50,6 +50,15 @@
     border-left: 3px solid transparent;
   }
 
+  a {
+    color: $blue-genie;
+    text-decoration: inherit;
+    cursor: pointer;
+  }
+  a:hover {
+    color: rgba($blue-genie, 0.8);
+  }
+
   code {
     background-color: rgba($kettleman, 0.1);
     color: $kettleman;

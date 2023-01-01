@@ -14,7 +14,7 @@ export const EditorContent: React.FC<EditorContentProps> = ({ editor }) => {
   return (
     <div ref={dragRef}>
       <TiptapEditorContent editor={editor} style={{ position: "relative" }}>
-        <MenuButton></MenuButton>
+        <MenuButton editor={editor} />
       </TiptapEditorContent>
     </div>
   );

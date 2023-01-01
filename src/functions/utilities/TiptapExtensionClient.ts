@@ -120,7 +120,13 @@ class SelectionSizeTooltip {
     if (!lastState) return;
     if (!this.tooltip) return;
 
+    this.tooltip.classList.add("tooltip");
     this.tooltip.style.display = "";
+
+    // if (!view.hasFocus()) {
+    //   this.tooltip.style.display = "none";
+    //   return;
+    // }
 
     if (!this.tooltip.offsetParent) {
       this.tooltip.style.display = "none";
