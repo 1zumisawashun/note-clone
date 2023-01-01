@@ -37,6 +37,8 @@ export const useMenu = (editor: Editor) => {
       disabled: !editor.can().chain().focus().toggleBold().run(),
       className: editor.isActive("bold") ? "is-active" : "",
       children: <AiOutlineBold></AiOutlineBold>,
+      icon: <AiOutlineBold></AiOutlineBold>,
+      label: "",
     };
   }, []);
 
@@ -49,6 +51,8 @@ export const useMenu = (editor: Editor) => {
       disabled: !editor.can().chain().focus().toggleItalic().run(),
       className: editor.isActive("italic") ? "is-active" : "",
       children: <AiOutlineItalic></AiOutlineItalic>,
+      icon: <AiOutlineItalic></AiOutlineItalic>,
+      label: "",
     };
   }, []);
 
@@ -61,6 +65,8 @@ export const useMenu = (editor: Editor) => {
       disabled: !editor.can().chain().focus().toggleStrike().run(),
       className: editor.isActive("strike") ? "is-active" : "",
       children: <AiOutlineStrikethrough></AiOutlineStrikethrough>,
+      icon: <AiOutlineStrikethrough></AiOutlineStrikethrough>,
+      label: "",
     };
   }, []);
 
@@ -73,6 +79,8 @@ export const useMenu = (editor: Editor) => {
       disabled: false,
       className: "",
       children: <RxTrash></RxTrash>,
+      icon: <RxTrash></RxTrash>,
+      label: "",
     };
   }, []);
 
@@ -85,6 +93,8 @@ export const useMenu = (editor: Editor) => {
       disabled: false,
       className: editor.isActive("heading", { level: 1 }) ? "is-active" : "",
       children: "h1",
+      icon: null,
+      label: "",
     };
   }, []);
 
@@ -97,6 +107,8 @@ export const useMenu = (editor: Editor) => {
       disabled: false,
       className: editor.isActive("heading", { level: 2 }) ? "is-active" : "",
       children: "h2",
+      icon: null,
+      label: "大見出し",
     };
   }, []);
 
@@ -109,6 +121,8 @@ export const useMenu = (editor: Editor) => {
       disabled: false,
       className: editor.isActive("heading", { level: 3 }) ? "is-active" : "",
       children: "h3",
+      icon: null,
+      label: "小見出し",
     };
   }, []);
 
@@ -121,6 +135,8 @@ export const useMenu = (editor: Editor) => {
       disabled: false,
       className: editor.isActive("bulletList") ? "is-active" : "",
       children: <AiOutlineUnorderedList></AiOutlineUnorderedList>,
+      icon: <AiOutlineUnorderedList></AiOutlineUnorderedList>,
+      label: "箇条書きリスト",
     };
   }, []);
 
@@ -133,6 +149,8 @@ export const useMenu = (editor: Editor) => {
       disabled: false,
       className: editor.isActive("orderedList") ? "is-active" : "",
       children: <AiOutlineOrderedList></AiOutlineOrderedList>,
+      icon: <AiOutlineOrderedList></AiOutlineOrderedList>,
+      label: "番号付きリスト",
     };
   }, []);
 
@@ -145,6 +163,8 @@ export const useMenu = (editor: Editor) => {
       disabled: false,
       className: editor.isActive("blockquote") ? "is-active" : "",
       children: <RxQuote></RxQuote>,
+      icon: <RxQuote></RxQuote>,
+      label: "引用",
     };
   }, []);
 
@@ -157,6 +177,8 @@ export const useMenu = (editor: Editor) => {
       disabled: false,
       className: "",
       children: <RxDividerHorizontal></RxDividerHorizontal>,
+      icon: <RxDividerHorizontal></RxDividerHorizontal>,
+      label: "区切り線",
     };
   }, []);
 
@@ -169,6 +191,8 @@ export const useMenu = (editor: Editor) => {
       disabled: false,
       className: editor.isActive({ textAlign: "left" }) ? "is-active" : "",
       children: <AiOutlineAlignLeft></AiOutlineAlignLeft>,
+      icon: <AiOutlineAlignLeft></AiOutlineAlignLeft>,
+      label: "指定なし",
     };
   }, []);
 
@@ -181,6 +205,8 @@ export const useMenu = (editor: Editor) => {
       disabled: false,
       className: editor.isActive({ textAlign: "center" }) ? "is-active" : "",
       children: <AiOutlineAlignCenter></AiOutlineAlignCenter>,
+      icon: <AiOutlineAlignCenter></AiOutlineAlignCenter>,
+      label: "中央寄せ",
     };
   }, []);
 
@@ -193,6 +219,8 @@ export const useMenu = (editor: Editor) => {
       disabled: false,
       className: editor.isActive({ textAlign: "right" }) ? "is-active" : "",
       children: <AiOutlineAlignRight></AiOutlineAlignRight>,
+      icon: <AiOutlineAlignRight></AiOutlineAlignRight>,
+      label: "右寄せ",
     };
   }, []);
 
@@ -209,6 +237,12 @@ export const useMenu = (editor: Editor) => {
           <AiOutlineUpload></AiOutlineUpload>
         </label>
       ),
+      icon: (
+        <label htmlFor="singleFile">
+          <AiOutlineUpload></AiOutlineUpload>
+        </label>
+      ),
+      label: "画像",
     };
   }, []);
 
@@ -221,6 +255,8 @@ export const useMenu = (editor: Editor) => {
       disabled: false,
       className: editor.isActive("link") ? "is-active" : "",
       children: <RxLink1></RxLink1>,
+      icon: <RxLink1></RxLink1>,
+      label: "埋め込み",
     };
   }, []);
 
@@ -233,6 +269,8 @@ export const useMenu = (editor: Editor) => {
       disabled: !editor.isActive("link"),
       className: "",
       children: <RxLinkBreak1></RxLinkBreak1>,
+      icon: <RxLinkBreak1></RxLinkBreak1>,
+      label: "埋め込み",
     };
   }, []);
 
@@ -245,6 +283,8 @@ export const useMenu = (editor: Editor) => {
       disabled: !editor.can().chain().focus().toggleCode().run(),
       className: editor.isActive("code") ? "is-active" : "",
       children: <RxCode></RxCode>,
+      icon: <RxCode></RxCode>,
+      label: "",
     };
   }, []);
   const clearMarks = useMemo(() => {
@@ -256,6 +296,8 @@ export const useMenu = (editor: Editor) => {
       disabled: false,
       className: "",
       children: "clear marks",
+      icon: null,
+      label: "",
     };
   }, []);
   const clearNodes = useMemo(() => {
@@ -267,6 +309,8 @@ export const useMenu = (editor: Editor) => {
       disabled: false,
       className: "",
       children: "clear nodes",
+      icon: null,
+      label: "",
     };
   }, []);
   const paragraph = useMemo(() => {
@@ -278,6 +322,8 @@ export const useMenu = (editor: Editor) => {
       disabled: false,
       className: editor.isActive("paragraph") ? "is-active" : "",
       children: "p",
+      icon: null,
+      label: "指定なし",
     };
   }, []);
   const codeBlock = useMemo(() => {
@@ -289,6 +335,8 @@ export const useMenu = (editor: Editor) => {
       disabled: false,
       className: editor.isActive("codeBlock") ? "is-active" : "",
       children: "code block",
+      icon: null,
+      label: "",
     };
   }, []);
   const hardBreak = useMemo(() => {
@@ -300,6 +348,8 @@ export const useMenu = (editor: Editor) => {
       disabled: false,
       className: "",
       children: "br",
+      icon: null,
+      label: "",
     };
   }, []);
   const undo = useMemo(() => {
@@ -311,6 +361,8 @@ export const useMenu = (editor: Editor) => {
       disabled: !editor.can().chain().focus().undo().run(),
       className: "",
       children: <AiOutlineUndo></AiOutlineUndo>,
+      icon: null,
+      label: "",
     };
   }, []);
   const redo = useMemo(() => {
@@ -322,6 +374,8 @@ export const useMenu = (editor: Editor) => {
       disabled: !editor.can().chain().focus().redo().run(),
       className: "",
       children: <AiOutlineRedo></AiOutlineRedo>,
+      icon: null,
+      label: "",
     };
   }, []);
   const textAlignJustify = useMemo(() => {
@@ -333,6 +387,8 @@ export const useMenu = (editor: Editor) => {
       disabled: false,
       className: editor.isActive({ textAlign: "justify" }) ? "is-active" : "",
       children: <RxTextAlignJustify></RxTextAlignJustify>,
+      icon: null,
+      label: "",
     };
   }, []);
 

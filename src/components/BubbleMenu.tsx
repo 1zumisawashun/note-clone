@@ -6,12 +6,34 @@ import { Tooltip } from "@mui/material";
 
 const Container = styled("div")`
   display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
+  gap: 30px;
+  background: white;
+  padding: 5px 30px;
+  border-radius: 10px;
+  border: 1px solid black;
 `;
-
+const Item = styled("div")`
+  height: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  :hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+`;
 const Popper = styled("div")`
   position: absolute;
+  padding: 10px 0;
+`;
+const PopperInner = styled("div")`
+  width: 150px;
+  border-radius: 10px;
+  background: white;
+  padding: 10px;
+  border: 1px solid black;
+  display: grid;
+  gap: 5px;
 `;
 
 export type BubbleMenuProps = {
@@ -60,6 +82,8 @@ export const BubbleMenu: React.FC<BubbleMenuProps> = ({ editor }) => {
       disabled: false,
       className: "",
       children: "見出し",
+      icon: null,
+      label: "見出し",
     };
   }, []);
   const lists = useMemo(() => {
@@ -70,7 +94,9 @@ export const BubbleMenu: React.FC<BubbleMenuProps> = ({ editor }) => {
       onMouseLeave: () => listDisclosure.close(),
       disabled: false,
       className: "",
-      children: "リスト",
+      children: <p style={{ fontSize: "13px" }}>リスト</p>,
+      icon: null,
+      label: "リスト",
     };
   }, []);
   const textAligns = useMemo(() => {
@@ -81,7 +107,9 @@ export const BubbleMenu: React.FC<BubbleMenuProps> = ({ editor }) => {
       onMouseLeave: () => textAlignDisclosure.close(),
       disabled: false,
       className: "",
-      children: "配置",
+      children: "文章の配置",
+      icon: null,
+      label: "文章の配置",
     };
   }, []);
 
@@ -97,7 +125,7 @@ export const BubbleMenu: React.FC<BubbleMenuProps> = ({ editor }) => {
   ];
 
   const headingItems = [heading2, heading3, paragraph];
-  const listItems = [bulletList, orderedList];
+  const listItems = [bulletList, orderedList, paragraph];
   const textAlignItems = [textAlignLeft, textAlignCenter, textAlignRight];
 
   return (
@@ -116,34 +144,46 @@ export const BubbleMenu: React.FC<BubbleMenuProps> = ({ editor }) => {
               onMouseLeave={item?.onMouseLeave}
               style={{ display: "relative" }}
             >
-              <button onClick={item.onClick} className={item.className}>
-                {item.children}
-              </button>
+              <Item onClick={item.onClick} className={item.className}>
+                {item.icon}
+                {!["link", "blockquote"].includes(item.type)
+                  ? item.label
+                  : null}
+              </Item>
               {headingDisclosure.isOpen && item.type === "headings" && (
                 <Popper>
-                  {headingItems.map((item) => (
-                    <button onClick={item.onClick} className={item.className}>
-                      {item.children}
-                    </button>
-                  ))}
+                  <PopperInner>
+                    {headingItems.map((item) => (
+                      <Item onClick={item.onClick} className={item.className}>
+                        {item.icon}
+                        {item.label}
+                      </Item>
+                    ))}
+                  </PopperInner>
                 </Popper>
               )}
               {textAlignDisclosure.isOpen && item.type === "textAligns" && (
                 <Popper>
-                  {textAlignItems.map((item) => (
-                    <button onClick={item.onClick} className={item.className}>
-                      {item.children}
-                    </button>
-                  ))}
+                  <PopperInner>
+                    {textAlignItems.map((item) => (
+                      <Item onClick={item.onClick} className={item.className}>
+                        {item.icon}
+                        {item.label}
+                      </Item>
+                    ))}
+                  </PopperInner>
                 </Popper>
               )}
               {listDisclosure.isOpen && item.type === "lists" && (
                 <Popper>
-                  {listItems.map((item) => (
-                    <button onClick={item.onClick} className={item.className}>
-                      {item.children}
-                    </button>
-                  ))}
+                  <PopperInner>
+                    {listItems.map((item) => (
+                      <Item onClick={item.onClick} className={item.className}>
+                        {item.icon}
+                        {item.label}
+                      </Item>
+                    ))}
+                  </PopperInner>
                 </Popper>
               )}
             </div>

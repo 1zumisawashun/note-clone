@@ -23,7 +23,7 @@ const Container = styled("div")`
   position: "relative";
 `;
 const EditorWrapper = styled("div")`
-  max-width: 50%;
+  max-width: 960px;
   margin: auto;
   padding: 4rem;
 `;

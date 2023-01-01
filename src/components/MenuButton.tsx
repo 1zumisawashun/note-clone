@@ -3,6 +3,18 @@ import { useState, SyntheticEvent } from "react";
 import { Menu, MenuItem } from "@mui/material";
 import { Editor } from "@tiptap/react";
 import { useDD, useMenu } from "../functions/hooks";
+import styled from "@emotion/styled";
+
+const Item = styled("div")`
+  height: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  :hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+`;
 
 export type MenuButtonProps = {
   editor: Editor;
@@ -66,9 +78,10 @@ export const MenuButton: React.FC<MenuButtonProps> = ({ editor }) => {
       >
         {items.map((item, index) => (
           <MenuItem disabled={item.disabled} key={index}>
-            <button onClick={item.onClick} className={item.className}>
-              {item.children}
-            </button>
+            <Item onClick={item.onClick} className={item.className}>
+              {item.icon}
+              {item.label}
+            </Item>
           </MenuItem>
         ))}
       </Menu>
