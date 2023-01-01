@@ -17,6 +17,16 @@ import {
   CustomNewline,
   EventHandler,
 } from "./functions/utilities";
+import styled from "@emotion/styled";
+
+const Container = styled("div")`
+  position: "relative";
+`;
+const EditorWrapper = styled("div")`
+  max-width: 50%;
+  margin: auto;
+  padding: 4rem;
+`;
 
 function App() {
   const editor = useEditor({
@@ -34,7 +44,6 @@ function App() {
       EventHandler,
     ],
     content: content,
-
     // onTransaction: ({ state }) => {
     //   console.log(state.selection.anchor)
     // },
@@ -48,20 +57,20 @@ function App() {
   };
 
   return (
-    <div style={{ position: "relative" }}>
+    <Container>
       {editor && (
         <>
-          <div style={{ maxWidth: "1280px", padding: "4rem" }} id="test">
+          <EditorWrapper>
             <Menubar editor={editor} />
             <MenubarSub editor={editor} />
             <BubbleMenu editor={editor} />
             <p>count is {editor.storage.characterCount.characters()}</p>
             <EditorContent editor={editor} />
             <button onClick={handleSubmit}>submit</button>
-          </div>
+          </EditorWrapper>
         </>
       )}
-    </div>
+    </Container>
   );
 }
 

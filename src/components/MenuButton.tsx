@@ -1,6 +1,6 @@
 import { RxPlusCircled } from "react-icons/rx";
 import { useState, SyntheticEvent } from "react";
-import { Menu, MenuItem, Tooltip } from "@mui/material";
+import { Menu, MenuItem } from "@mui/material";
 import { Editor } from "@tiptap/react";
 import { useDD, useMenu } from "../functions/hooks";
 
@@ -64,14 +64,12 @@ export const MenuButton: React.FC<MenuButtonProps> = ({ editor }) => {
           horizontal: "left",
         }}
       >
-        {items.map((item) => (
-          <Tooltip title={item.type} key={item.type}>
-            <MenuItem disabled={item.disabled}>
-              <button onClick={item.onClick} className={item.className}>
-                {item.children}
-              </button>
-            </MenuItem>
-          </Tooltip>
+        {items.map((item, index) => (
+          <MenuItem disabled={item.disabled} key={index}>
+            <button onClick={item.onClick} className={item.className}>
+              {item.children}
+            </button>
+          </MenuItem>
         ))}
       </Menu>
       <input

@@ -2,6 +2,7 @@ import { BubbleMenu as BubbleMenuTiptap, Editor } from "@tiptap/react";
 import { useEffect, useState, useMemo } from "react";
 import { useMenu, useDisclosure } from "../functions/hooks";
 import styled from "@emotion/styled";
+import { Tooltip } from "@mui/material";
 
 const Container = styled("div")`
   display: flex;
@@ -105,47 +106,48 @@ export const BubbleMenu: React.FC<BubbleMenuProps> = ({ editor }) => {
       tippyOptions={{
         duration: 100,
         maxWidth: 600,
-        interactive: true,
       }}
     >
       <Container>
-        {items.map((item) => (
-          <div
-            onMouseOver={item?.onMouseOver}
-            onMouseLeave={item?.onMouseLeave}
-            style={{ display: "relative" }}
-          >
-            <button onClick={item.onClick} className={item.className}>
-              {item.children}
-            </button>
-            {headingDisclosure.isOpen && item.type === "headings" && (
-              <Popper>
-                {headingItems.map((item) => (
-                  <button onClick={item.onClick} className={item.className}>
-                    {item.children}
-                  </button>
-                ))}
-              </Popper>
-            )}
-            {textAlignDisclosure.isOpen && item.type === "textAligns" && (
-              <Popper>
-                {textAlignItems.map((item) => (
-                  <button onClick={item.onClick} className={item.className}>
-                    {item.children}
-                  </button>
-                ))}
-              </Popper>
-            )}
-            {listDisclosure.isOpen && item.type === "lists" && (
-              <Popper>
-                {listItems.map((item) => (
-                  <button onClick={item.onClick} className={item.className}>
-                    {item.children}
-                  </button>
-                ))}
-              </Popper>
-            )}
-          </div>
+        {items.map((item, index) => (
+          <Tooltip title={item.type} key={index} placement="top" arrow={true}>
+            <div
+              onMouseOver={item?.onMouseOver}
+              onMouseLeave={item?.onMouseLeave}
+              style={{ display: "relative" }}
+            >
+              <button onClick={item.onClick} className={item.className}>
+                {item.children}
+              </button>
+              {headingDisclosure.isOpen && item.type === "headings" && (
+                <Popper>
+                  {headingItems.map((item) => (
+                    <button onClick={item.onClick} className={item.className}>
+                      {item.children}
+                    </button>
+                  ))}
+                </Popper>
+              )}
+              {textAlignDisclosure.isOpen && item.type === "textAligns" && (
+                <Popper>
+                  {textAlignItems.map((item) => (
+                    <button onClick={item.onClick} className={item.className}>
+                      {item.children}
+                    </button>
+                  ))}
+                </Popper>
+              )}
+              {listDisclosure.isOpen && item.type === "lists" && (
+                <Popper>
+                  {listItems.map((item) => (
+                    <button onClick={item.onClick} className={item.className}>
+                      {item.children}
+                    </button>
+                  ))}
+                </Popper>
+              )}
+            </div>
+          </Tooltip>
         ))}
       </Container>
     </BubbleMenuTiptap>
