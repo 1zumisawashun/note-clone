@@ -73,7 +73,7 @@ export const useMenu = (editor: Editor) => {
   const trash = useMemo(() => {
     return {
       type: "trash",
-      onClick: () => editor.chain().focus().deleteNode("paragraph").run(),
+      onClick: () => editor.chain().focus().deleteSelection().run(),
       onMouseOver: () => null,
       onMouseLeave: () => null,
       disabled: false,

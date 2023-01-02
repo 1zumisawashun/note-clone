@@ -6,6 +6,7 @@ export {
   Paragraph,
   Placeholder,
   CharacterCount,
+  Blockquote
 } from "./TiptapClient";
 
 export { CustomNewline, EventHandler } from "./TiptapExtensionClient";

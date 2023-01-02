@@ -7,7 +7,12 @@ import TiptapFocus from "@tiptap/extension-focus";
 import TiptapParagraph from "@tiptap/extension-paragraph";
 import TiptapPlaceholder from "@tiptap/extension-placeholder";
 import TiptapCharacterCount from "@tiptap/extension-character-count";
+import TiptapBlockquote from "@tiptap/extension-blockquote";
 
+// test
+export const Blockquote = TiptapBlockquote.extend({
+  content: "paragraph*",
+});
 // NOTE:https://tiptap.dev/api/nodes/image
 // NOTE:https://codesandbox.io/s/tiptap-image-forked-bvchsz?file=/src/Editor.jsx:409-416
 export const Image = TiptapImage.extend({

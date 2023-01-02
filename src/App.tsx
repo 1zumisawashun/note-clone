@@ -16,6 +16,7 @@ import {
   CharacterCount,
   CustomNewline,
   EventHandler,
+  Blockquote,
 } from "./functions/utilities";
 import styled from "@emotion/styled";
 
@@ -42,6 +43,7 @@ function App() {
       CharacterCount,
       CustomNewline,
       EventHandler,
+      Blockquote,
     ],
     content: content,
     // onTransaction: ({ state }) => {
