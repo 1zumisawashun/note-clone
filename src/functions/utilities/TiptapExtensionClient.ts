@@ -32,9 +32,10 @@ declare module "@tiptap/core" {
 
 // NOTE:https://stackoverflow.com/questions/65668815/tiptap-how-to-create-a-paragraph-p-on-shift-enter-instead-of-a-br
 // NOTE:コマンドの拡張で上記記事の内容を引用。別途型定義を拡張させる必要がある。
+// NOTE:trueで処理をスルーするっぽい > https://github.com/ueberdosis/tiptap/discussions/2948
 export const CustomNewline = Extension.create({
   name: "newline",
-  priority: 1000, // Optional
+  priority: 1000,
   // NOTE:https://tiptap.dev/api/commands#inline-commands
   addCommands() {
     return {
@@ -54,61 +55,58 @@ export const CustomNewline = Extension.create({
           if (dispatch) dispatch(transaction);
           return true;
         },
-      // selectionて何？カーソルで洗濯している場所か
       exitOnDoubleEnter:
         () =>
-        ({ editor, state, dispatch, chain, commands, tr }) => {
-          const selection = state.selection;
-          console.log(selection);
-          const { $from } = selection;
+        ({ editor, state, chain, commands, tr }) => {
+          const { $from } = state.selection;
           const typeName = $from.nodeBefore?.type.name;
+          const isList =
+            editor.isActive("bulletList") || editor.isActive("orderedList");
+          const isBlockQuote = editor.isActive("blockquote");
 
-          console.log(selection.empty);
-          console.log(editor.view.dom.parentNode, "====");
-          // const size = this.editor.view.state.doc.content;
-          // state.docは全体のことか
-          // console.log(size, "size");
+          // NOTE:nodeを削除する
+          if ($from.nodeBefore === null && (isList || isBlockQuote)) {
+            commands.clearNodes();
+            return true;
+          }
 
-          // FIXME:複数のtiptapの処理を分岐させるならこの中で行う
-          // FIXME:codeの時にbrを入れないハンドリングを追加する
-          // FIXME:先頭でenterを押した場合は改行（p）させる
-          // NOTE:falseにしてしまうとなんか期待値にならない
-          // NOTE:trueで処理をスルーするっぽい > https://github.com/ueberdosis/tiptap/discussions/2948
-          if (typeName !== "hardBreak") {
+          // NOTE:nodeの先頭でenterを押下したらparagraphで改行
+          if ($from.nodeBefore === null) {
+            return commands.createParagraphNear();
+          }
+
+          // NOTE:list系でなく、直前にbrタグがない場合enterを押下したらbrで改行する
+          if (typeName !== "hardBreak" && !isList && !isBlockQuote) {
             return commands.insertContent("<br>");
           }
 
-          return (
-            chain()
-              // NOTE:登録せずにカスタムコマンドの実装を行なっている感じか
-              .command(({ tr, dispatch }) => {
-                const transaction = tr.delete($from.pos - 1, $from.pos);
-                if (dispatch) dispatch(transaction);
-                return true;
-                // NOTE:<br>はpos1なので<br>を消すためにpositionをマイナス1にする
+          // NOTE:list系でなく、直前にbrタグがある場合enterを押下したら直前のbrを削除してparagraphで改行する
+          if (typeName === "hardBreak" && !isList && !isBlockQuote) {
+            return (
+              chain()
                 // NOTE:https://tiptap.dev/api/commands#inline-commands
-              })
-              .command(() => {
-                console.log("ここ動いている？");
-                return true;
-              })
-              // NOTE:https://tiptap.dev/api/commands/create-paragraph-near
-              .createParagraphNear()
-              .run()
-          );
+                .command(({ tr, dispatch }) => {
+                  const transaction = tr.delete($from.pos - 1, $from.pos);
+                  if (dispatch) dispatch(transaction);
+                  return true;
+                })
+                // NOTE:https://tiptap.dev/api/commands/create-paragraph-near
+                .createParagraphNear()
+                .run()
+            );
+          }
+
+          // NOTE:どれにもヒットしなければparagraphで改行する
+          return commands.createParagraphNear();
         },
     };
   },
   addKeyboardShortcuts() {
     return {
-      "Shift-Enter": () => this.editor.commands.addNewline(),
+      // "Shift-Enter": () => this.editor.commands.addNewline(),
       Enter: () => this.editor.commands.exitOnDoubleEnter(),
-      // Enter: ({ editor }) => handleExitOnDoubleEnter(editor),
       // NOTE:https://stackoverflow.com/questions/65668815/tiptap-how-to-create-a-paragraph-p-on-shift-enter-instead-of-a-br
-      // "Shift-Enter": ({ editor }) => {
-      //   const a = editor.commands.enter();
-      //   return true;
-      // },
+      "Shift-Enter": ({ editor }) => editor.commands.enter(),
     };
   },
 });

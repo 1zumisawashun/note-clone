@@ -31,7 +31,6 @@ The Link extension adds support for <a href="https://tiptap.dev/api/marks/link">
 </p>
 <blockquote>
   Wow, that’s amazing. Good work, boy! 👏
-  <br />
   — Mom
 </blockquote>
 `;
