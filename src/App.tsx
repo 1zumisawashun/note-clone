@@ -1,10 +1,7 @@
-import { EditorContent } from "./components/EditorContent";
-import { Menubar } from "./components/Menubar";
-import { MenubarSub } from "./components/MenubarSub";
+import { EditorContent, Menu, MenuSub, MenuBubble } from "./components";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { content } from "./functions/constants/content_01";
-import { BubbleMenu } from "./components/BubbleMenu";
 import {
   Image,
   TextAlign,
@@ -63,9 +60,9 @@ function App() {
       {editor && (
         <>
           <EditorWrapper>
-            <Menubar editor={editor} />
-            <MenubarSub editor={editor} />
-            <BubbleMenu editor={editor} />
+            <Menu editor={editor} />
+            <MenuSub editor={editor} />
+            <MenuBubble editor={editor} />
             <p>count is {editor.storage.characterCount.characters()}</p>
             <EditorContent editor={editor} />
             <button onClick={handleSubmit}>submit</button>

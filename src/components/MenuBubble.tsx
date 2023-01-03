@@ -36,14 +36,14 @@ const PopperInner = styled("div")`
   gap: 5px;
 `;
 
-export type BubbleMenuProps = {
+export type MenuBubbleProps = {
   editor: Editor;
 };
 
 // NOTE:https://tiptap.dev/api/extensions/bubble-menu
 // NOTE:内部的にtippy.jsを使っているっぽい
 // NOTE:https://atomiks.github.io/tippyjs/
-export const BubbleMenu: React.FC<BubbleMenuProps> = ({ editor }) => {
+export const MenuBubble: React.FC<MenuBubbleProps> = ({ editor }) => {
   const {
     bold,
     italic,

@@ -9,11 +9,11 @@ const Container = styled("div")`
   padding: 10px 0;
 `;
 
-export type MenubarSubProps = {
+export type MenuSubProps = {
   editor: Editor;
 };
 
-export const MenubarSub: React.FC<MenubarSubProps> = ({ editor }) => {
+export const MenuSub: React.FC<MenuSubProps> = ({ editor }) => {
   const {
     code,
     clearMarks,

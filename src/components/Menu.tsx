@@ -9,11 +9,11 @@ const Container = styled("div")`
   padding: 10px 0;
 `;
 
-export type MenubarProps = {
+export type MenuProps = {
   editor: Editor;
 };
 
-export const Menubar: React.FC<MenubarProps> = ({ editor }) => {
+export const Menu: React.FC<MenuProps> = ({ editor }) => {
   const { addImage } = useDD(editor);
   const {
     bold,
