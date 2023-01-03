@@ -4,8 +4,14 @@ import {
   isNodeSelection,
   isTextSelection,
   posToDOMRect,
+  getMarkRange,
 } from "@tiptap/core";
-import { Plugin, PluginKey, EditorState } from "prosemirror-state";
+import {
+  Plugin,
+  PluginKey,
+  EditorState,
+  TextSelection,
+} from "prosemirror-state";
 import { EditorView } from "prosemirror-view";
 
 /**
@@ -15,6 +21,7 @@ declare module "@tiptap/core" {
   interface Commands<ReturnType> {
     newline: {
       addNewline: () => ReturnType;
+      setNewParagraph: () => ReturnType;
       exitOnDoubleEnter: () => ReturnType;
     };
   }
@@ -55,10 +62,21 @@ export const CustomNewline = Extension.create({
           if (dispatch) dispatch(transaction);
           return true;
         },
+      setNewParagraph:
+        () =>
+        ({ commands, state }) => {
+          const { selection, schema } = state;
+          const { $head } = selection;
+          const position = $head.after();
+          return commands.insertContentAt(
+            { from: position, to: position },
+            "<p></p>"
+          );
+        },
       exitOnDoubleEnter:
         () =>
         ({ editor, state, chain, commands, tr }) => {
-          const { $from } = state.selection;
+          const { $from, $head } = state.selection;
           const typeName = $from.nodeBefore?.type.name;
           const isList =
             editor.isActive("bulletList") || editor.isActive("orderedList");
@@ -106,7 +124,8 @@ export const CustomNewline = Extension.create({
       // "Shift-Enter": () => this.editor.commands.addNewline(),
       Enter: () => this.editor.commands.exitOnDoubleEnter(),
       // NOTE:https://stackoverflow.com/questions/65668815/tiptap-how-to-create-a-paragraph-p-on-shift-enter-instead-of-a-br
-      "Shift-Enter": ({ editor }) => editor.commands.enter(),
+      // "Shift-Enter": ({ editor }) => editor.commands.enter(),
+      "Shift-Enter": ({ editor }) => editor.commands.setNewParagraph(),
     };
   },
 });
@@ -201,6 +220,21 @@ export const EventHandler = Extension.create({
             // console.log(start, "handleClick");
             const { schema, doc, tr } = view.state;
             // console.log(doc.resolve(pos), "doc.resolve(pos)");
+          },
+          //NOTE:https://github.com/apostrophecms/apostrophe/blob/11e47fdd0ab03e615f4fb3a3269ced1f09cbb259/lib/modules/apostrophe-rich-text-widgets/src/apos/tiptap-extensions/Link.js#L79
+          handleDoubleClick(view, pos, event) {
+            const { schema, doc, tr } = view.state;
+            const range = getMarkRange(doc.resolve(pos), schema.marks.link);
+
+            if (!range) return;
+
+            const $start = doc.resolve(range.from);
+            const $end = doc.resolve(range.to);
+            const transaction = tr.setSelection(
+              new TextSelection($start, $end)
+            );
+
+            view.dispatch(transaction);
           },
         },
       }),
