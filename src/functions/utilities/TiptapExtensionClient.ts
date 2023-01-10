@@ -11,11 +11,16 @@ import {
   PluginKey,
   EditorState,
   TextSelection,
+  NodeSelection,
 } from "prosemirror-state";
 import { EditorView } from "prosemirror-view";
+import Paragraph from "@tiptap/extension-paragraph";
+import HardBreak from "@tiptap/extension-hard-break";
 
 /**
  * https://stackoverflow.com/questions/73842787/how-to-add-custom-command-in-in-declaration-in-tiptap-when-extending-existing-ex
+ * childrenでerrorが出る場合は明示的にd.tsに追加する必要がある
+ * https://github.com/bsidelinger912/react-tooltip-lite/issues/130
  */
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -62,21 +67,25 @@ export const CustomNewline = Extension.create({
           if (dispatch) dispatch(transaction);
           return true;
         },
+      // NOTE:https://github.com/ueberdosis/tiptap/issues/2302
+      // NOTE:https://stackoverflow.com/questions/74385856/how-do-i-remove-default-behavior-of-shift-enter-or-add-custom-behavior-in-tipt
       setNewParagraph:
         () =>
         ({ commands, state }) => {
           const { selection, schema } = state;
           const { $head } = selection;
+
+          // NOTE:選択しているnodeの次のブロックに指定する
           const position = $head.after();
           return commands.insertContentAt(
             { from: position, to: position },
-            "<p></p>"
+            { type: Paragraph.name } // Note this is adding a paragraph "<p></p>" > 直接宣言しても問題ない
           );
         },
       exitOnDoubleEnter:
         () =>
         ({ editor, state, chain, commands, tr }) => {
-          const { $from, $head } = state.selection;
+          const { $from } = state.selection;
           const typeName = $from.nodeBefore?.type.name;
           const isList =
             editor.isActive("bulletList") || editor.isActive("orderedList");
@@ -95,7 +104,7 @@ export const CustomNewline = Extension.create({
 
           // NOTE:list系でなく、直前にbrタグがない場合enterを押下したらbrで改行する
           if (typeName !== "hardBreak" && !isList && !isBlockQuote) {
-            return commands.insertContent("<br>");
+            return commands.insertContent({ type: HardBreak.name });
           }
 
           // NOTE:list系でなく、直前にbrタグがある場合enterを押下したら直前のbrを削除してparagraphで改行する
@@ -130,6 +139,8 @@ export const CustomNewline = Extension.create({
   },
 });
 
+// NOTE: https://prosemirror.net/examples/tooltip/ > proseMirrorを参考に実装
+// NOTE: https://codemirror.net/examples/tooltip/ > codeMirrorはやはりちょっと違う
 class SelectionSizeTooltip {
   tooltip;
 
@@ -173,11 +184,11 @@ class SelectionSizeTooltip {
     if (parent.type.name === "heading") {
       if (parent.attrs.level === 1) {
         const result = (70 - 40) / 2 + 40;
-        this.tooltip.style.bottom = box.bottom - start.top - result + "px";
+        this.tooltip.style.bottom = box.bottom - start.top + 14 - result + "px";
       }
       if (parent.attrs.level === 2) {
         const result = (60 - 40) / 2 + 40;
-        this.tooltip.style.bottom = box.bottom - start.top + 13 - result + "px";
+        this.tooltip.style.bottom = box.bottom - start.top + 14 - result + "px";
       }
       if (parent.attrs.level === 3) {
         const result = (50 - 40) / 2 + 40;
@@ -196,7 +207,12 @@ class SelectionSizeTooltip {
   }
 }
 
-// state.selection.emptyはスクロール選択のこと
+/**
+ * state.selectionに関してはこれに詳細書いてある>https://benborgers.com/posts/tiptap-selection
+ * state.selection.emptyはスクロール選択のこと
+ * 参考にしたのは下記
+ * https://stackoverflow.com/questions/73739904/how-can-i-upload-files-in-tip-tap-editor-for-react
+ */
 export const EventHandler = Extension.create({
   name: "eventHandler",
 
@@ -208,7 +224,6 @@ export const EventHandler = Extension.create({
           return new SelectionSizeTooltip(editorView);
         },
         props: {
-          // focus（click）, inputText, enterで関数をセットする必要がある
           // ここのviewはこれが使える。https://prosemirror.net/docs/ref/#view
           handleTextInput(view, from, to, next) {
             let start = view.coordsAtPos(from);
@@ -221,13 +236,15 @@ export const EventHandler = Extension.create({
             const { schema, doc, tr } = view.state;
             // console.log(doc.resolve(pos), "doc.resolve(pos)");
           },
-          //NOTE:https://github.com/apostrophecms/apostrophe/blob/11e47fdd0ab03e615f4fb3a3269ced1f09cbb259/lib/modules/apostrophe-rich-text-widgets/src/apos/tiptap-extensions/Link.js#L79
+          // NOTE:https://github.com/apostrophecms/apostrophe/blob/11e47fdd0ab03e615f4fb3a3269ced1f09cbb259/lib/modules/apostrophe-rich-text-widgets/src/apos/tiptap-extensions/Link.js#L79
+          // NOTE:https://snyk.io/advisor/npm-package/tiptap-utils/example
           handleDoubleClick(view, pos, event) {
             const { schema, doc, tr } = view.state;
             const range = getMarkRange(doc.resolve(pos), schema.marks.link);
 
             if (!range) return;
 
+            // NOTE:aタグのテキストをダブルクリックするとaタグで囲われているテキスト全体にハイライトがあたる
             const $start = doc.resolve(range.from);
             const $end = doc.resolve(range.to);
             const transaction = tr.setSelection(
