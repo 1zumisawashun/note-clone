@@ -24,9 +24,21 @@ import {
   RxTextAlignJustify,
 } from "react-icons/rx";
 import { useLink } from ".";
+import { BaseSyntheticEvent } from "react";
+import { addImage } from "../helpers/addImage";
+import { getDataUrl } from "../helpers/getDataUrl";
 
 export const useMenu = (editor: Editor) => {
   const { setLink } = useLink(editor);
+
+  const handleUpload = async (e: BaseSyntheticEvent) => {
+    const files = e.target.files;
+    const src = (await getDataUrl({ files })) as string;
+    if (!src) {
+      alert("error");
+    }
+    addImage({ src, editor });
+  };
 
   const bold = useMemo(() => {
     return {
@@ -233,13 +245,15 @@ export const useMenu = (editor: Editor) => {
       disabled: false,
       className: "",
       children: (
-        <label htmlFor="singleFile">
+        <label>
           <AiOutlineUpload></AiOutlineUpload>
+          <input type="file" onChange={handleUpload} hidden />
         </label>
       ),
       icon: (
-        <label htmlFor="singleFile">
+        <label>
           <AiOutlineUpload></AiOutlineUpload>
+          <input type="file" onChange={handleUpload} hidden />
         </label>
       ),
       label: "画像",

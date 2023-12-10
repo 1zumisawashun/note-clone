@@ -1,28 +1,9 @@
-import { Editor } from "@tiptap/react";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { RefObject, useCallback, useEffect } from "react";
 
-export const useDD = (editor: Editor) => {
-  const [isDragging, setIsDragging] = useState<boolean>(false);
-  const dragRef = useRef<HTMLDivElement | null>(null);
-
-  const addImage = useCallback(
-    async (files: FileList | null) => {
-      if (files === null) return;
-      const file = files[0];
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      await new Promise((resolve) => (reader.onload = () => resolve("")));
-      if (reader.result) {
-        editor
-          .chain()
-          .focus()
-          .setImage({ src: reader.result as string })
-          .run();
-      }
-    },
-    [editor]
-  );
-
+export const useDD = (
+  dragRef: RefObject<HTMLElement>,
+  callback: (e: DragEvent) => void
+) => {
   const handleDragIn = useCallback((e: DragEvent): void => {
     e.preventDefault();
     e.stopPropagation();
@@ -31,29 +12,22 @@ export const useDD = (editor: Editor) => {
   const handleDragOut = useCallback((e: DragEvent): void => {
     e.preventDefault();
     e.stopPropagation();
-
-    setIsDragging(false);
   }, []);
 
   const handleDragOver = useCallback((e: DragEvent): void => {
     e.preventDefault();
     e.stopPropagation();
-
-    if (e.dataTransfer?.files) {
-      setIsDragging(true);
-    }
   }, []);
 
-  const handleDrop = useCallback((e: DragEvent): void => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.dataTransfer) {
-      const files = e.dataTransfer.files;
-      // FIXME:バリデーションを挟む
-      addImage(files);
-    }
-    setIsDragging(false);
-  }, []);
+  const handleDrop = useCallback(
+    (e: DragEvent): void => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      callback(e);
+    },
+    [callback]
+  );
 
   const initDragEvents = useCallback((): void => {
     if (dragRef.current !== null) {
@@ -62,7 +36,7 @@ export const useDD = (editor: Editor) => {
       dragRef.current.addEventListener("dragover", handleDragOver);
       dragRef.current.addEventListener("drop", handleDrop);
     }
-  }, [handleDragIn, handleDragOut, handleDragOver, handleDrop]);
+  }, [handleDragIn, handleDragOut, handleDragOver, handleDrop, dragRef]);
 
   const resetDragEvents = useCallback((): void => {
     if (dragRef.current !== null) {
@@ -71,12 +45,11 @@ export const useDD = (editor: Editor) => {
       dragRef.current.removeEventListener("dragover", handleDragOver);
       dragRef.current.removeEventListener("drop", handleDrop);
     }
-  }, [handleDragIn, handleDragOut, handleDragOver, handleDrop]);
+  }, [handleDragIn, handleDragOut, handleDragOver, handleDrop, dragRef]);
 
   useEffect(() => {
     initDragEvents();
+
     return () => resetDragEvents();
   }, [initDragEvents, resetDragEvents]);
-
-  return { dragRef, addImage, isDragging };
 };

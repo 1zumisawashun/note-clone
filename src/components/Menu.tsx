@@ -1,5 +1,5 @@
 import { Editor } from "@tiptap/react";
-import { useDD, useMenu } from "../functions/hooks";
+import { useMenu } from "../functions/hooks";
 import styled from "@emotion/styled";
 
 const Container = styled("div")`
@@ -14,7 +14,6 @@ export type MenuProps = {
 };
 
 export const Menu: React.FC<MenuProps> = ({ editor }) => {
-  const { addImage } = useDD(editor);
   const {
     bold,
     italic,
@@ -66,13 +65,6 @@ export const Menu: React.FC<MenuProps> = ({ editor }) => {
           {item.children}
         </button>
       ))}
-      <input
-        type="file"
-        onChange={(e) => addImage(e.target.files)}
-        hidden
-        name="singleFile"
-        id="singleFile"
-      />
     </Container>
   );
 };

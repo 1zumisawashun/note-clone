@@ -2,7 +2,7 @@ import { RxPlusCircled } from "react-icons/rx";
 import { useState, SyntheticEvent } from "react";
 import { Menu, MenuItem } from "@mui/material";
 import { Editor } from "@tiptap/react";
-import { useDD, useMenu } from "../functions/hooks";
+import { useMenu } from "../functions/hooks";
 import styled from "@emotion/styled";
 
 const Item = styled("div")`
@@ -32,7 +32,6 @@ export const MenuButton: React.FC<MenuButtonProps> = ({ editor }) => {
 
   const isOpen = Boolean(anchorEl);
 
-  const { addImage } = useDD(editor);
   const {
     heading2,
     heading3,
@@ -77,21 +76,14 @@ export const MenuButton: React.FC<MenuButtonProps> = ({ editor }) => {
         }}
       >
         {items.map((item, index) => (
-          <MenuItem disabled={item.disabled} key={index}>
-            <Item onClick={item.onClick} className={item.className}>
+          <MenuItem disabled={item.disabled} key={index} onClick={item.onClick}>
+            <Item className={item.className}>
               {item.icon}
               {item.label}
             </Item>
           </MenuItem>
         ))}
       </Menu>
-      <input
-        type="file"
-        onChange={(e) => addImage(e.target.files)}
-        hidden
-        name="singleFile"
-        id="singleFile"
-      />
     </div>
   );
 };
