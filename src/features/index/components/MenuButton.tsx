@@ -2,7 +2,7 @@ import { RxPlusCircled } from "react-icons/rx";
 import { useState, SyntheticEvent } from "react";
 import { Menu, MenuItem } from "@mui/material";
 import { Editor } from "@tiptap/react";
-import { useMenu } from "../functions/hooks";
+import { useMenu } from "../../../functions/hooks";
 import styled from "@emotion/styled";
 
 const Item = styled("div")`

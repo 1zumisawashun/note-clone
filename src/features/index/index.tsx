@@ -1,7 +1,10 @@
-import { EditorContent, Menu, MenuSub, MenuBubble } from "./components";
+import { MenuSub } from "./components/MenuSub";
+import { EditorContent } from "./components/EditorContent";
+import { Menu } from "./components/Menu";
+import { MenuBubble } from "./components/MenuBubble";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { content } from "./functions/constants/content_01";
+import { content } from "../../functions/constants/content_01";
 import {
   Image,
   TextAlign,
@@ -14,7 +17,7 @@ import {
   CustomNewline,
   EventHandler,
   Blockquote,
-} from "./functions/utilities";
+} from "../../functions/utilities";
 import styled from "@emotion/styled";
 
 const Container = styled("div")`
@@ -26,7 +29,7 @@ const EditorWrapper = styled("div")`
   padding: 4rem;
 `;
 
-function App() {
+export function Index() {
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -72,5 +75,3 @@ function App() {
     </Container>
   );
 }
-
-export default App;

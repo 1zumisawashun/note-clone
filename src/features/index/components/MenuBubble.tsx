@@ -1,6 +1,6 @@
 import { BubbleMenu as BubbleMenuTiptap, Editor } from "@tiptap/react";
 import { useEffect, useState, useMemo } from "react";
-import { useMenu, useDisclosure } from "../functions/hooks";
+import { useMenu, useDisclosure } from "../../../functions/hooks";
 import styled from "@emotion/styled";
 import { Tooltip } from "@mui/material";
 

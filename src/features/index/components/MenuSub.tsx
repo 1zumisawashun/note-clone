@@ -1,6 +1,6 @@
 import { Editor } from "@tiptap/react";
 import styled from "@emotion/styled";
-import { useMenu } from "../functions/hooks";
+import { useMenu } from "../../../functions/hooks";
 
 const Container = styled("div")`
   display: flex;
@@ -9,11 +9,7 @@ const Container = styled("div")`
   padding: 10px 0;
 `;
 
-export type MenuSubProps = {
-  editor: Editor;
-};
-
-export const MenuSub: React.FC<MenuSubProps> = ({ editor }) => {
+export const MenuSub = ({ editor }: { editor: Editor }) => {
   const {
     code,
     clearMarks,

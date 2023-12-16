@@ -1,5 +1,5 @@
 import { Editor } from "@tiptap/react";
-import { useMenu } from "../functions/hooks";
+import { useMenu } from "../../../functions/hooks";
 import styled from "@emotion/styled";
 
 const Container = styled("div")`
